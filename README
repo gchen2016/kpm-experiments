@@ -19,15 +19,14 @@ $ ./run.sh four-boxes-r75 1
 2) Process the data
 -------------------
 
-The experiment results will stored be in the instances/INSTANCESET/data.out.head. 
-The results are processed using an R-script in makeplots.r. 
-Edit the name of the instance set at the beginning of the script and run the script. 
-The resulting plots will be in instances/plots folder. 
+The experiment results will be stored in file instances/INSTANCESET/data.out.head. 
+The results are then processed using an R-script makegrid.r. 
+The resulting plots will be in plots folder. 
 
 3) Inspect the source code
 --------------------------
 
-The folder "solvers" contains glue code that integrates the following java libraries:
+The folder "solvers" contains glue code that integrates the following libraries:
 
 1) deconflictiontools (contains, kPM, PP, and OD)
      hg clone http://jones.felk.cvut.cz/repo/alite-deconflictiontools
