@@ -1,0 +1,56 @@
+Multi-robot Planning Solvers
+==================================
+
+Compiling
+---------
+The dependencies are managed using Maven. To compile the project and create a jar archive with dependencies run:	
+
+$ mvn package
+
+The jar archive with all dependencies will be in:
+
+target/kpm-experiments-1.0-SNAPSHOT-jar-with-dependencies.jar
+
+Alternatively, you can open the project in your favorite IDE, i.e. in Eclipse.
+
+Getting started
+---------------
+
+The planners are run through cz.agents.admap.creator.ScenarioCreator class. 
+
+Parameters:
+  -problemfile 		Path to an xml file with problem description.
+  -method			Specifies method to be used to solve the problem. One of {PP, ORCA, KDPMD, ODCN}. KDPMD is the penalty method, ODCN is the OD algorith.
+  -k                Number of iterations performed by penalty method.
+  -maxtime			Specifies the maximum time considered during trajectory planning.
+  -timestep			The discretization of time-dimension used during trajectory planning.
+  -showvis          Turns on/off the visualization.
+  
+Detailed information can be derived from the source code, in particular from the method tt.jointeuclid2ni.Solver.parseArguments().  
+
+Example: 
+--------
+
+The following command will run the penlaty method on the example problem instance described in file scenarios/headson.xml.
+
+	$ java -jar solvers/target/kpm-experiments-1.0-SNAPSHOT-jar-with-dependencies.jar -method KDPMD -k 20 -problemfile scenarios/headson.xml -maxtime 21000 -timestep 21 -showvis -summary
+
+Visualization control: 
+----------------------
+
+When the visualization window pops-up, use the following keys to toggle various useful visualization layers:
+  m - missions/tasks of agents
+  t - trajectories of agents
+  g - planning graph
+  p - polygons representing obstacles 
+  
+The movement of agents can be simulated by pressing (and holding) the following keys:
+  q - move time forwards
+  a - move time backwards
+  <space> - reset time to 0
+  
+Dragging with right mouse button pressed moves the viewport. Mouse wheel zooms the view.
+  
+  
+  
+

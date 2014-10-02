@@ -1,0 +1,37 @@
+How to run an experiment
+========================
+
+1) Run the experiments
+----------------------
+
+The following command 
+
+$ ./run.sh INSTANCESET NCPU
+
+executes an experiment on instanceset INSTANCESET using NCPU cpus.
+
+To run all experiments using one CPU core, run the following commands:
+
+$ ./run.sh empty-unbounded-r150-sgoverlap 1
+$ ./run.sh empty-unbounded-r75 1
+$ ./run.sh four-boxes-r27 1
+
+2) Process the data
+-------------------
+
+The experiment results will stored be in the instances/INSTANCESET/data.out.head. 
+The results are processed using an R-script in makeplots.r. 
+Edit the name of the instance set at the beginning of the script and run the script. 
+The resulting plots will be in instances/plots folder. 
+
+3) Inspect the source code
+--------------------------
+
+The solvers folder contains glue code that integrates java implementation of:
+1) deconflictiontools 
+     hg clone http://jones.felk.cvut.cz/repo/alite-deconflictiontools
+     
+2) ORCA
+    https://github.com/mcapino/orca
+    
+
