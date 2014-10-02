@@ -16,7 +16,8 @@ OPTIONS:
    -f [file/folder]	Additional file/folder to copy to server
    -s [list]		SSH logins separated by commas (':' for local),
 			for n tasks running at once on host use n/login
-   -m			Each output to single file
+   -m [number[k|g]]	Set the heap memory limit for each JVM. 			
+   -e			Each output to single file
    -v			Progress informations
 * required
 
@@ -35,7 +36,7 @@ Run one task in parallel on local machine, 4 on hostA and 6 on hostB
 EOF
 }
 
-while getopts “hj:c:o:f:ms:n:v” OPTION
+while getopts “hj:c:o:f:em:s:n:v” OPTION
 do
      case $OPTION in
 	h)
@@ -54,14 +55,17 @@ do
 	f)
 		TRANSFER_FILE=$OPTARG
 		;;
-	m)
+	e)
 		FILES_ARG="--files"
 		;;
+	m)
+		MAX_HEAP=$OPTARG
+		;;		
 	s)
 		SSH_LOGIN=$OPTARG
 		;;
 	v)
-		V_ARG="--progress -t"
+		V_ARG="--progress"
 		;;
 	
 	?)
@@ -89,7 +93,7 @@ if [ $SSH_LOGIN ]; then
 fi
 
 if [ $OUTPUT_FILE ]; then
-	parallel --gnu $V_ARG $SSH_ARG $TRANSFER_ARG $FILES_ARG -a $CONFIG_FILE --cleanup --colsep ' ' "java -Dlog4j.configuration=\"file:$PWD/log4j.custom\" -XX:+UseSerialGC -jar $JAR_FILE" > ./$OUTPUT_FILE
+	parallel --gnu $V_ARG $SSH_ARG $TRANSFER_ARG $FILES_ARG -a $CONFIG_FILE --cleanup --colsep ' ' "java -Dlog4j.configuration=\"file:$PWD/log4j.custom\" -XX:+UseSerialGC -Xmx$MAX_HEAP -jar $JAR_FILE" > ./$OUTPUT_FILE
 else
-	parallel --gnu $V_ARG $SSH_ARG $TRANSFER_ARG $FILES_ARG -a $CONFIG_FILE --cleanup --colsep ' ' "java -Dlog4j.configuration=\"file:$PWD/log4j.custom\" -XX:+UseSerialGC -jar $JAR_FILE"
+	parallel --gnu $V_ARG $SSH_ARG $TRANSFER_ARG $FILES_ARG -a $CONFIG_FILE --cleanup --colsep ' ' "java -Dlog4j.configuration=\"file:$PWD/log4j.custom\" -XX:+UseSerialGC -Xmx$MAX_HEAP -jar $JAR_FILE"
 fi
