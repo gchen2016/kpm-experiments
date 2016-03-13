@@ -28,7 +28,7 @@ The resulting plots will be in plots folder.
 
 The folder "solvers" contains glue code that integrates the following libraries:
 
-1) deconflictiontools (contains, kPM, PP, and OD)
+1) deconflictiontools (contains implementation of kPM, PP, and OD)
      hg clone http://jones.felk.cvut.cz/repo/alite-deconflictiontools
      
 2) ORCA
